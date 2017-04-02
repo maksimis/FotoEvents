@@ -10,107 +10,107 @@ using FotoEvents.Models;
 
 namespace FotoEvents.Controllers
 {
-    public class PhotoModelsController : Controller
+    public class TypesController : Controller
     {
         private EventContext db = new EventContext();
 
-        // GET: PhotoModels
+        // GET: Types
         public ActionResult Index()
         {
-            return View(db.Photos.ToList());
+            return View(db.Types.ToList());
         }
 
-        // GET: PhotoModels/Details/5
+        // GET: Types/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PhotoModel photoModel = db.Photos.Find(id);
-            if (photoModel == null)
+            FotoEvents.Models.Type type = db.Types.Find(id);
+            if (type == null)
             {
                 return HttpNotFound();
             }
-            return View(photoModel);
+            return View(type);
         }
 
-        // GET: PhotoModels/Create
+        // GET: Types/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: PhotoModels/Create
+        // POST: Types/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PhotoModelID,LargeSourse,SmallSourse,DateUploaded")] PhotoModel photoModel)
+        public ActionResult Create([Bind(Include = "TypeID,Title")] FotoEvents.Models.Type type)
         {
             if (ModelState.IsValid)
             {
-                db.Photos.Add(photoModel);
+                db.Types.Add(type);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(photoModel);
+            return View(type);
         }
 
-        // GET: PhotoModels/Edit/5
+        // GET: Types/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PhotoModel photoModel = db.Photos.Find(id);
-            if (photoModel == null)
+            FotoEvents.Models.Type type = db.Types.Find(id);
+            if (type == null)
             {
                 return HttpNotFound();
             }
-            return View(photoModel);
+            return View(type);
         }
 
-        // POST: PhotoModels/Edit/5
+        // POST: Types/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PhotoModelID,LargeSourse,SmallSourse,DateUploaded")] PhotoModel photoModel)
+        public ActionResult Edit([Bind(Include = "TypeID,Title")] FotoEvents.Models.Type type)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(photoModel).State = EntityState.Modified;
+                db.Entry(type).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(photoModel);
+            return View(type);
         }
 
-        // GET: PhotoModels/Delete/5
+        // GET: Types/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PhotoModel photoModel = db.Photos.Find(id);
-            if (photoModel == null)
+            FotoEvents.Models.Type type = db.Types.Find(id);
+            if (type == null)
             {
                 return HttpNotFound();
             }
-            return View(photoModel);
+            return View(type);
         }
 
-        // POST: PhotoModels/Delete/5
+        // POST: Types/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PhotoModel photoModel = db.Photos.Find(id);
-            db.Photos.Remove(photoModel);
+            FotoEvents.Models.Type type = db.Types.Find(id);
+            db.Types.Remove(type);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

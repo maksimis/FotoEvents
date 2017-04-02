@@ -10,107 +10,107 @@ using FotoEvents.Models;
 
 namespace FotoEvents.Controllers
 {
-    public class EventModelsController : Controller
+    public class ClubsController : Controller
     {
         private EventContext db = new EventContext();
 
-        // GET: EventModels
+        // GET: Clubs
         public ActionResult Index()
         {
-            return View(db.Enents.ToList());
+            return View(db.Clubs.ToList());
         }
 
-        // GET: EventModels/Details/5
+        // GET: Clubs/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventModel eventModel = db.Enents.Find(id);
-            if (eventModel == null)
+            Club club = db.Clubs.Find(id);
+            if (club == null)
             {
                 return HttpNotFound();
             }
-            return View(eventModel);
+            return View(club);
         }
 
-        // GET: EventModels/Create
+        // GET: Clubs/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: EventModels/Create
+        // POST: Clubs/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventModelID,Title,Discription,Place,Fornewbies,DateTime")] EventModel eventModel)
+        public ActionResult Create([Bind(Include = "ClubID,Title")] Club club)
         {
             if (ModelState.IsValid)
             {
-                db.Enents.Add(eventModel);
+                db.Clubs.Add(club);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(eventModel);
+            return View(club);
         }
 
-        // GET: EventModels/Edit/5
+        // GET: Clubs/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventModel eventModel = db.Enents.Find(id);
-            if (eventModel == null)
+            Club club = db.Clubs.Find(id);
+            if (club == null)
             {
                 return HttpNotFound();
             }
-            return View(eventModel);
+            return View(club);
         }
 
-        // POST: EventModels/Edit/5
+        // POST: Clubs/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventModelID,Title,Discription,Place,Fornewbies,DateTime")] EventModel eventModel)
+        public ActionResult Edit([Bind(Include = "ClubID,Title")] Club club)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(eventModel).State = EntityState.Modified;
+                db.Entry(club).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(eventModel);
+            return View(club);
         }
 
-        // GET: EventModels/Delete/5
+        // GET: Clubs/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventModel eventModel = db.Enents.Find(id);
-            if (eventModel == null)
+            Club club = db.Clubs.Find(id);
+            if (club == null)
             {
                 return HttpNotFound();
             }
-            return View(eventModel);
+            return View(club);
         }
 
-        // POST: EventModels/Delete/5
+        // POST: Clubs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            EventModel eventModel = db.Enents.Find(id);
-            db.Enents.Remove(eventModel);
+            Club club = db.Clubs.Find(id);
+            db.Clubs.Remove(club);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
