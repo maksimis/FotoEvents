@@ -27,12 +27,5 @@ namespace FotoEvents.Models
         public virtual Type Type { get; set; }
         public virtual ICollection<PhotoModel> PhotoModels { get; set; }
     }
-    public class EventModelView:EventModel
-    {
-        public EventModel ЕventModel { get; set; }
-      
-        [DataType(DataType.ImageUrl)]
-        public string SmallSourse { get; set; }
 
-    }
 }
