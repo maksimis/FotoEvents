@@ -11,8 +11,13 @@ namespace FotoEvents.Models
         [Key]
         public int PhotoModelID { get; set; }
         [Required]
+        [DataType(DataType.ImageUrl)]
         public string LargeSourse { get; set; }
+        [DataType(DataType.ImageUrl)]
         public string SmallSourse { get; set; }
-        
+        [Required]
+        [DataType(DataType.Upload)]
+        public DateTime DateUploaded { get; set; }
+
     }
 }

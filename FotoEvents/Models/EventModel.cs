@@ -13,11 +13,13 @@ namespace FotoEvents.Models
         [Required]
         public string Title { get; set; }
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Discription { get; set; }
         [Required]
         public string Place { get; set; }
         public bool Fornewbies { get; set; }
         [Required]
+        [DataType(DataType.DateTime)]
         public DateTime DateTime { get; set; }
         [Required]
         public virtual Club Club { get; set; }
