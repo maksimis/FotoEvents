@@ -18,6 +18,7 @@ namespace FotoEvents.Models
         [Required]
         [DataType(DataType.Upload)]
         public DateTime DateUploaded { get; set; }
+        public virtual EventModel Event { get; set; }
 
     }
 }

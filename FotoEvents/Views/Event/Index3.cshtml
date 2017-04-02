@@ -1,7 +1,7 @@
 ﻿
 <!-- model IEnumerable<FotoEvents.Models.EventModel> 
 -->
-@model PagedList.IPagedList<FotoEvents.Models.EventModelView>
+@model PagedList.IPagedList<FotoEvents.Models.EventModel>
 
 @using PagedList.Mvc;
 
@@ -20,22 +20,16 @@
     {
         <tr>
             <td>
-                <div class="display-field">
-
-                    <img src="@Url.Content("~/"+item.SmallSourse)" />
-                </div>
+                @Html.DisplayFor(modelItem => item.DateTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ЕventModel.DateTime)
-            </td>
-            <td>
-                @Html.ActionLink(item.ЕventModel.Title, "Details", new { id = item.ЕventModel.EventModelID })
+                @Html.ActionLink(item.Title, "Details", new { id = item.EventModelID })
             </td>
 
             <td>
-                @Html.ActionLink("Редактировать", "Edit", new { id = item.ЕventModel.EventModelID })
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.EventModelID })
 
-                <!--     @Html.ActionLink("Delete", "Delete", new { id=item.ЕventModel.EventModelID })-->
+                <!--     @Html.ActionLink("Delete", "Delete", new { id=item.EventModelID })-->
             </td>
         </tr>
     }

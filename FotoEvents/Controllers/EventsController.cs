@@ -7,37 +7,21 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FotoEvents.Models;
-using PagedList;
 
 namespace FotoEvents.Controllers
 {
-    public class EventController : Controller
+    public class EventsController : Controller
     {
         private EventContext db = new EventContext();
 
-        // GET: EventModels
-        public ActionResult Index(int? page)
+        // GET: Events
+        public ActionResult Index()
         {
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            IEnumerable<EventModel> events = db.Events.OrderBy(x=> x.DateTime).ToList();
-            IEnumerable<PhotoModel> photos = db.Photos.ToList();
-            List<EventModelView> eventviews = new List<EventModelView>() ;
-            foreach (EventModel e in events)
-            {
-                EventModelView emv = new EventModelView();
-                emv.ЕventModel = e;
-
-                emv.SmallSourse = (from photo in photos
-                                  where photo.Event.EventModelID == e.EventModelID
-                                  select photo).Random().SmallSourse;
-                eventviews.Add(emv);
-            }
-            return View(eventviews.ToPagedList(pageNumber, pageSize));
-           // return View(db.Events.ToList());
+            var events = db.Events.Include(e => e.Club).Include(e => e.Type);
+            return View(events.ToList());
         }
 
-        // GET: EventModels/Details/5
+        // GET: Events/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -52,18 +36,20 @@ namespace FotoEvents.Controllers
             return View(eventModel);
         }
 
-        // GET: EventModels/Create
+        // GET: Events/Create
         public ActionResult Create()
         {
+            ViewBag.ClubID = new SelectList(db.Clubs, "ClubID", "Title");
+            ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Title");
             return View();
         }
 
-        // POST: EventModels/Create
+        // POST: Events/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventModelID,Title,Discription,Place,Fornewbies,DateTime")] EventModel eventModel)
+        public ActionResult Create([Bind(Include = "EventModelID,Title,Discription,Place,Fornewbies,DateTime,ClubID,TypeID")] EventModel eventModel)
         {
             if (ModelState.IsValid)
             {
@@ -72,10 +58,12 @@ namespace FotoEvents.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ClubID = new SelectList(db.Clubs, "ClubID", "Title", eventModel.ClubID);
+            ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Title", eventModel.TypeID);
             return View(eventModel);
         }
 
-        // GET: EventModels/Edit/5
+        // GET: Events/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -87,29 +75,30 @@ namespace FotoEvents.Controllers
             {
                 return HttpNotFound();
             }
-            ClubsDropDownList(eventModel.Club.ClubID);
-            TypesDropDownList(eventModel.Type.TypeID);
+            ViewBag.ClubID = new SelectList(db.Clubs, "ClubID", "Title", eventModel.ClubID);
+            ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Title", eventModel.TypeID);
             return View(eventModel);
         }
 
-        // POST: EventModels/Edit/5
+        // POST: Events/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventModelID,Title,Discription,Place,Fornewbies,DateTime")] EventModel eventModel)
+        public ActionResult Edit([Bind(Include = "EventModelID,Title,Discription,Place,Fornewbies,DateTime,ClubID,TypeID")] EventModel eventModel)
         {
-           
             if (ModelState.IsValid)
             {
                 db.Entry(eventModel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ClubID = new SelectList(db.Clubs, "ClubID", "Title", eventModel.ClubID);
+            ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Title", eventModel.TypeID);
             return View(eventModel);
         }
 
-        // GET: EventModels/Delete/5
+        // GET: Events/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -124,7 +113,7 @@ namespace FotoEvents.Controllers
             return View(eventModel);
         }
 
-        // POST: EventModels/Delete/5
+        // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -142,26 +131,6 @@ namespace FotoEvents.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-        private void ClubsDropDownList(object selectedClub = null)
-        {
-            var ClubQuery = (from d in db.Clubs
-                                    orderby d.ClubID
-                                    select d).ToList<Club>();
-            ClubQuery.Add(new Club { ClubID = 0, Title = "Выберите клуб" });
-
-            ViewBag.ClubID = new SelectList(ClubQuery, "ClubID", "Title", selectedClub);
-
-        }
-        private void TypesDropDownList(object selectedType = null)
-        {
-            var TypeQuery = (from d in db.Types
-                             orderby d.TypeID
-                             select d).ToList<Models.Type>();
-            TypeQuery.Add(new Models.Type { TypeID = 0, Title = "Выберите тип" });
-
-            ViewBag.TypeID = new SelectList(TypeQuery, "TypeID", "Title", selectedType);
-
         }
     }
 }

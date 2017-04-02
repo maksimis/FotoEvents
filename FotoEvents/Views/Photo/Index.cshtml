@@ -27,13 +27,17 @@
     <tr>
         <td>
             <div class="display-field">
-                @Html.DisplayFor(model => item.LargeSourse)
+              
                 <img src="@Url.Content("~/"+item.LargeSourse)" />
             </div>
-            @Html.DisplayFor(modelItem => item.LargeSourse)
+           
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SmallSourse)
+            <div class="display-field">
+              
+                <img src="@Url.Content("~/"+item.SmallSourse)" />
+            </div>
+           
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateUploaded)
