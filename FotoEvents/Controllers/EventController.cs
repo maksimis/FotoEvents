@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FotoEvents.Models;
+using PagedList;
 
 namespace FotoEvents.Controllers
 {
@@ -15,9 +16,13 @@ namespace FotoEvents.Controllers
         private EventContext db = new EventContext();
 
         // GET: EventModels
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.Enents.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            IEnumerable<EventModel> events = db.Events.OrderBy(x=> x.EventModelID);
+            return View(events.ToPagedList(pageNumber, pageSize));
+           // return View(db.Events.ToList());
         }
 
         // GET: EventModels/Details/5
@@ -27,7 +32,7 @@ namespace FotoEvents.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventModel eventModel = db.Enents.Find(id);
+            EventModel eventModel = db.Events.Find(id);
             if (eventModel == null)
             {
                 return HttpNotFound();
@@ -50,7 +55,7 @@ namespace FotoEvents.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Enents.Add(eventModel);
+                db.Events.Add(eventModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +70,7 @@ namespace FotoEvents.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventModel eventModel = db.Enents.Find(id);
+            EventModel eventModel = db.Events.Find(id);
             if (eventModel == null)
             {
                 return HttpNotFound();
@@ -96,7 +101,7 @@ namespace FotoEvents.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventModel eventModel = db.Enents.Find(id);
+            EventModel eventModel = db.Events.Find(id);
             if (eventModel == null)
             {
                 return HttpNotFound();
@@ -109,8 +114,8 @@ namespace FotoEvents.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            EventModel eventModel = db.Enents.Find(id);
-            db.Enents.Remove(eventModel);
+            EventModel eventModel = db.Events.Find(id);
+            db.Events.Remove(eventModel);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

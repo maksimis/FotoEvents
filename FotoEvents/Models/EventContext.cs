@@ -14,7 +14,7 @@ namespace FotoEvents.Models
         {
         }
 
-        public DbSet<EventModel> Enents { get; set; }
+        public DbSet<EventModel> Events { get; set; }
         public DbSet<PhotoModel> Photos { get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Type> Types { get; set; }
