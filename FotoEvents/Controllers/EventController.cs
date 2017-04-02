@@ -20,7 +20,13 @@ namespace FotoEvents.Controllers
         {
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-            IEnumerable<EventModel> events = db.Events.OrderBy(x=> x.EventModelID);
+            IEnumerable<EventModel> events = db.Events.OrderBy(x=> x.DateTime);
+            IEnumerable<PhotoModel> photos = db.Photos;
+            IEnumerable<EventModelView> eventwievs = new List<EventModelView>() ;
+            foreach (EventModel e in events)
+            {
+
+            }
             return View(events.ToPagedList(pageNumber, pageSize));
            // return View(db.Events.ToList());
         }

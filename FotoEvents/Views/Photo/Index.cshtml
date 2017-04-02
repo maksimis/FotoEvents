@@ -26,6 +26,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            <div class="display-field">
+                @Html.DisplayFor(model => item.LargeSourse)
+                <img src="@Url.Content("~/"+item.LargeSourse)" />
+            </div>
             @Html.DisplayFor(modelItem => item.LargeSourse)
         </td>
         <td>
