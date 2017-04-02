@@ -1,0 +1,45 @@
+﻿@model IEnumerable<FotoEvents.Models.PhotoModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LargeSourse)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SmallSourse)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateUploaded)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LargeSourse)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SmallSourse)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateUploaded)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PhotoModelID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PhotoModelID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PhotoModelID })
+        </td>
+    </tr>
+}
+
+</table>
