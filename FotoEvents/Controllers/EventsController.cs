@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FotoEvents.Models;
+using PagedList;
 
 namespace FotoEvents.Controllers
 {
@@ -15,10 +16,25 @@ namespace FotoEvents.Controllers
         private EventContext db = new EventContext();
 
         // GET: Events
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var events = db.Events.Include(e => e.Club).Include(e => e.Type);
-            return View(events.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            IEnumerable<EventModel> events = db.Events.OrderBy(x => x.DateTime).ToList();
+            IEnumerable<PhotoModel> photos = db.Photos.ToList();
+            List<EventModelView> eventviews = new List<EventModelView>();
+            foreach (EventModel e in events)
+            {
+                EventModelView emv = new EventModelView();
+                emv.ЕventModel = e;
+
+                emv.SmallSourse = (from photo in photos
+                                   where photo.Event.EventModelID == e.EventModelID
+                                   select photo).Random().SmallSourse;
+                eventviews.Add(emv);
+            }
+            return View(eventviews.ToPagedList(pageNumber, pageSize));
+            // return View(db.Events.ToList());
         }
 
         // GET: Events/Details/5
