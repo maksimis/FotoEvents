@@ -14,32 +14,34 @@
 <p>
     @Html.ActionLink("Создать", "Create")
 </p>
-<table class="table">
+
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                <div class="display-field">
+        <div class="row">
+            
+            <div class="col-md-4 photo">
 
-                    <img src="@Url.Content("~/"+item.SmallSourse)" />
+                        <img src="@Url.Content("~/"+item.SmallSourse)" width="200" />
+            </div>
+
+            <div class="col-md-8 text">
+                <div class="row">
+                    @Html.DisplayFor(modelItem => item.ЕventModel.DateTime)
                 </div>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ЕventModel.DateTime)
-            </td>
-            <td>
-                @Html.ActionLink(item.ЕventModel.Title, "Details", new { id = item.ЕventModel.EventModelID })
-            </td>
+                <div class="row">
+                    @Html.ActionLink(item.ЕventModel.Title, "Details", new { id = item.ЕventModel.EventModelID })
+                </div>
+                <div class="row">
+                     @Html.ActionLink("Редактировать", "Edit", new { id = item.ЕventModel.EventModelID })
+                 </div>
 
-            <td>
-                @Html.ActionLink("Редактировать", "Edit", new { id = item.ЕventModel.EventModelID })
-
-                <!--     @Html.ActionLink("Delete", "Delete", new { id=item.ЕventModel.EventModelID })-->
-            </td>
-        </tr>
+                    <!--     @Html.ActionLink("Delete", "Delete", new { id=item.ЕventModel.EventModelID })-->
+              </div>
+         </div>
+         
     }
 
-</table>
+
 <br />
 Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 
