@@ -1,0 +1,47 @@
+﻿
+@model PagedList.IPagedList<FotoEvents.Models.EventModelView>
+
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Фотоальбомы";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Создать", "Create")
+</p>
+
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            
+            <div class="col-md-4 photo">
+
+                        <img src="@Url.Content("~/"+item.SmallSourse)" width="200" />
+            </div>
+
+            <div class="col-md-8 text">
+                <div class="row">
+                    @Html.DisplayFor(modelItem => item.ЕventModel.DateTime)
+                </div>
+                <div class="row">
+                    @Html.ActionLink(item.ЕventModel.Title, "Details", new { id = item.ЕventModel.EventModelID })
+                </div>
+                <div class="row">
+                     @Html.ActionLink("Редактировать", "Edit", new { id = item.ЕventModel.EventModelID })
+                 </div>
+
+                    <!--     @Html.ActionLink("Delete", "Delete", new { id=item.ЕventModel.EventModelID })-->
+              </div>
+         </div>
+         
+    }
+
+
+<br />
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

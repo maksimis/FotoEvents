@@ -11,27 +11,27 @@ using PagedList;
 
 namespace FotoEvents.Controllers
 {
-    public class EventsController : Controller
+    public class PhotosController : Controller
     {
         private EventContext db = new EventContext();
 
         // GET: Events
         public ActionResult Index(int? page)
         {
-            int pageSize = 6;//Максимальное количество элементов на странице
+            int pageSize = 12; //Максимальное количество элементов на странице, для ToPagedList
             int pageNumber = (page ?? 1);
-            IEnumerable<EventModel> events = db.Events.OrderBy(x => x.DateTime).Where(x=>x.DateTime>=DateTime.Today).ToList();//Сортировка событий по датам и отбор только свежих
-            IEnumerable<PhotoModel> photos = db.Photos.ToList();
-            List<EventModelView> eventviews = new List<EventModelView>();
-            foreach (EventModel e in events)
+            IEnumerable<EventModel> events = db.Events.OrderBy(x => x.DateTime).ToList();
+            var photos = db.Photos.ToList();
+            var eventshavephotos = (from t in photos select t.Event).Distinct(); //Ищем события только с фото, для списка фотоальбомов
+            List <EventModelView> eventviews = new List<EventModelView>();
+            foreach (EventModel e in eventshavephotos)
             {
                 EventModelView emv = new EventModelView();
                 emv.ЕventModel = e;
                 var eventphotos = (from photo in photos
-                              where photo.Event.EventModelID == e.EventModelID
-                              select photo);
-                // В расшерение LINQ Random нельзя передавать пустой запрос - нужно исправить
-                emv.SmallSourse = (eventphotos.Count()>0) ? eventphotos.Random().SmallSourse: "/images/small/1.jpg" ;//заменить на нофото
+                                   where photo.Event.EventModelID == e.EventModelID
+                                   select photo);
+                emv.SmallSourse = eventphotos.First().SmallSourse; //Первое фото для картинки фотоальбома
                 eventviews.Add(emv);
             }
             return View(eventviews.ToPagedList(pageNumber, pageSize));
