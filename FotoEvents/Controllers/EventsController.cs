@@ -27,10 +27,10 @@ namespace FotoEvents.Controllers
             {
                 EventModelView emv = new EventModelView();
                 emv.ЕventModel = e;
-
-                emv.SmallSourse = (from photo in photos
-                                   where photo.Event.EventModelID == e.EventModelID
-                                   select photo).Random().SmallSourse;
+                var eventphotos = (from photo in photos
+                              where photo.Event.EventModelID == e.EventModelID
+                              select photo);
+                emv.SmallSourse = (eventphotos.Count()>0) ? eventphotos.Random().SmallSourse: "/images/small/1.jpg" ;//заменить на нофото
                 eventviews.Add(emv);
             }
             return View(eventviews.ToPagedList(pageNumber, pageSize));

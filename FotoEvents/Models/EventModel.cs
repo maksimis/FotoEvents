@@ -23,11 +23,11 @@ namespace FotoEvents.Models
         public DateTime DateTime { get; set; }
         [Required]
         public virtual int ClubID { get; set; }
-        [Required]
+    
         public virtual Club Club { get; set; }
         [Required]
         public virtual int TypeID { get; set; }
-        [Required]
+        
         public virtual Type Type { get; set; }
         public virtual ICollection<PhotoModel> PhotoModels { get; set; }
     }
