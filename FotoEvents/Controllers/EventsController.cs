@@ -15,6 +15,10 @@ namespace FotoEvents.Controllers
     {
         private EventContext db = new EventContext();
 
+        
+        
+
+
         // GET: Events
         public ActionResult Index(int? page)
         {

@@ -198,7 +198,6 @@
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\TypesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -232,6 +231,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PhotoModel.cs" />
+    <Compile Include="Controllers\AddataController.cs" />
     <Compile Include="Moduls\LinqRandomsExtensions.cs" />
     <Compile Include="Moduls\ResizeImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -362,9 +362,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Albums\Create.cshtml" />
-    <Content Include="Views\Photo\Delete.cshtml" />
-    <Content Include="Views\Photo\Details.cshtml" />
-    <Content Include="Views\Photo\Edit.cshtml" />
     <Content Include="Views\Albums\Photos.cshtml" />
     <Content Include="Views\Clubs\Create.cshtml" />
     <Content Include="Views\Clubs\Delete.cshtml" />
@@ -382,7 +379,6 @@
     <Content Include="Views\Events\Edit.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Albums\Index.cshtml" />
-    <Content Include="Views\Photo\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

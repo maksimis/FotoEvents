@@ -1,8 +1,9 @@
-﻿@model IEnumerable<FotoEvents.Models.PhotoModel>
+﻿@model PagedList.IPagedList<FotoEvents.Models.PhotoModel>
 
 @{
     ViewBag.Title = "Фотоальбом";
 }
+@using PagedList.Mvc;
 
 <h2>Фотоальбом мероприятия @Html.DisplayFor(model => model.First().Event.Title)</h2>
 
@@ -27,4 +28,13 @@
            
 
          </div>
+</div>
+
+<br />
+<div class="row-fluid">
+    <div class="col-md-12 ">
+        Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Photos", new { EventID=Model.First().Event.EventModelID , page }))
+    </div>
 </div>
