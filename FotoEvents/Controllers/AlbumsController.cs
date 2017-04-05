@@ -181,18 +181,21 @@ namespace FotoEvents.Controllers
 
                         //Создаем имя файла для сохранения на сервере
                         var pathLargeStart = string.Format("{0}\\{1}", pathStringLarge, filelarge.FileName);
-
-                        isExists = System.IO.File.Exists(pathLargeStart);
-                        int i = 1;
                         var pathLarge = pathLargeStart;
-                        while (isExists) 
-                            {
-                                pathLarge = pathLargeStart + "_" + i;
-                                isExists = System.IO.File.Exists(pathLarge);
-                                i++;
-                            }
-                        
+                        //проверка на существование файлов - переделать если успею
+                        //isExists = System.IO.File.Exists(pathLargeStart);
+                        //int i = 1;
+                    
+                        //while (isExists) 
+                        //    {
+                        //        pathLarge = pathLargeStart + "_" + i;
+                        //        isExists = System.IO.File.Exists(pathLarge);
+                        //        i++;
+                        //    }
+
                         filelarge.SaveAs(pathLarge);
+                        
+
 
                         //Создаем уменьшенную копию изображения
                         isExists = System.IO.Directory.Exists(pathStringSmall);
@@ -205,9 +208,9 @@ namespace FotoEvents.Controllers
 
                         PhotoModel photo = new PhotoModel();
                         photo.DateUploaded = DateTime.Today;
-                        photo.LargeSourse = pathLarge;
-                        photo.SmallSourse = pathSmall;
-                        photo.Event.EventModelID = EventID;
+                        photo.LargeSourse = pathLarge.Replace(Server.MapPath(@"\"),"");
+                        photo.SmallSourse = pathSmall.Replace(Server.MapPath(@"\"), "");
+                        photo.Event = db.Events.Where(x=>x.EventModelID==EventID).First();
                         db.Photos.Add(photo);
                         db.SaveChanges();
                         
@@ -226,7 +229,7 @@ namespace FotoEvents.Controllers
 
             if (isSavedSuccessfully)
             {
-                return RedirectToAction("Photos", EventID);
+                return RedirectToAction("Photos","Albums", new {EventID = EventID});
             }
             else
             {

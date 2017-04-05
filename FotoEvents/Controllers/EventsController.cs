@@ -31,7 +31,7 @@ namespace FotoEvents.Controllers
                               where photo.Event.EventModelID == e.EventModelID
                               select photo);
                 // В расшерение LINQ Random нельзя передавать пустой запрос - нужно исправить
-                emv.SmallSourse = (eventphotos.Count()>0) ? eventphotos.Random().SmallSourse: "/images/small/1.jpg" ;//заменить на нофото
+                emv.SmallSourse = (eventphotos.Count()>0) ? eventphotos.Random().SmallSourse: "/images/small/nofoto.jpg" ;
                 eventviews.Add(emv);
             }
             return View(eventviews.ToPagedList(pageNumber, pageSize));
