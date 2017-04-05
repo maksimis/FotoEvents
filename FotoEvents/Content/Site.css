@@ -20,7 +20,7 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 500px;
 }
 
 .photosmall {
@@ -29,3 +29,5 @@ textarea {
     position: center;
     padding: 7px 7px 7px 7px;
 }
+
+.withall {width:inherit}
