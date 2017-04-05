@@ -23,11 +23,9 @@ textarea {
     max-width: 280px;
 }
 
-#dropZone {
-    background: gray;
-    border: black dashed 3px;
-    width: 200px;
-    padding: 50px;
-    text-align: center;
-    color: white;
+.photosmall {
+    width: 150px;
+    height: 150px;
+    position: center;
+    padding: 7px 7px 7px 7px;
 }

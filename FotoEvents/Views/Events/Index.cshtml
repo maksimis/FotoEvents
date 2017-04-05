@@ -14,35 +14,41 @@
 <p>
     @Html.ActionLink("Создать", "Create")
 </p>
-
+<div class="row-fluid">
     @foreach (var item in Model)
     {
-        <div class="row">
-            
-            <div class="col-md-4 photo">
+        <div class="col-md-12 ">
+            <div class="row">
+                <div class="col-md-4 ">
+                    <img class="photosmall" src="@Url.Content("~/"+item.SmallSourse)" />
+                </div>
 
-                        <img src="@Url.Content("~/"+item.SmallSourse)" width="200" />
+                <div class="col-md-8">
+                    <div class="row">
+                        @Html.DisplayFor(modelItem => item.ЕventModel.DateTime)
+                    </div>
+                    <div class="row">
+                        @Html.ActionLink(item.ЕventModel.Title, "Details", new { id = item.ЕventModel.EventModelID })
+                    </div>
+                    <div class="row">
+                        @Html.ActionLink("Редактировать", "Edit", new { id = item.ЕventModel.EventModelID })
+                    </div>
+                    <div class="row">
+                        @Html.ActionLink("Удалить", "Delete", new { id=item.ЕventModel.EventModelID })
+                    </div>
+                </div>
             </div>
-
-            <div class="col-md-8 text">
-                <div class="row">
-                    @Html.DisplayFor(modelItem => item.ЕventModel.DateTime)
-                </div>
-                <div class="row">
-                    @Html.ActionLink(item.ЕventModel.Title, "Details", new { id = item.ЕventModel.EventModelID })
-                </div>
-                <div class="row">
-                     @Html.ActionLink("Редактировать", "Edit", new { id = item.ЕventModel.EventModelID })
-                 </div>
-
-                    <!--     @Html.ActionLink("Delete", "Delete", new { id=item.ЕventModel.EventModelID })-->
-              </div>
-         </div>
-         
+        </div>
     }
+ </div>
+
 
 
 <br />
-Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+<div class="row-fluid">
+    <div class="col-md-12 ">
+        Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>

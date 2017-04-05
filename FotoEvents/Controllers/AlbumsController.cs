@@ -8,12 +8,16 @@ using System.Web;
 using System.Web.Mvc;
 using FotoEvents.Models;
 using PagedList;
+using System.IO;
+using FotoEvents.Moduls;
+using System.Drawing;
 
 namespace FotoEvents.Controllers
 {
-    public class PhotosController : Controller
+    public class AlbumsController : Controller
     {
         private EventContext db = new EventContext();
+        
 
         // GET: Events
         public ActionResult Index(int? page)
@@ -36,6 +40,12 @@ namespace FotoEvents.Controllers
             }
             return View(eventviews.ToPagedList(pageNumber, pageSize));
             
+        }
+
+        public ActionResult Photos(int eventID)
+        {
+
+            return View(db.Photos.Where(x=>x.Event.EventModelID==eventID).ToList());
         }
 
         // GET: Events/Details/5
@@ -140,6 +150,91 @@ namespace FotoEvents.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
+        public ActionResult SaveUploadedFile(int EventID)
+        {
+            bool isSavedSuccessfully = true;
+            string fName = "";
+            try
+            {
+                foreach (string fileName in Request.Files)
+                {
+                    HttpPostedFileBase filelarge = Request.Files[fileName];
+                    //Save filelarge content goes here
+                    fName = filelarge.FileName;
+                    if (filelarge != null && filelarge.ContentLength > 0)
+                    {
+
+                        var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\", Server.MapPath(@"\")));
+
+                        string pathStringLarge = System.IO.Path.Combine(originalDirectory.ToString(), "large");
+                        string pathStringSmall = System.IO.Path.Combine(originalDirectory.ToString(), "small");
+
+                        var fileName1 = Path.GetFileName(filelarge.FileName);
+
+                        //Проверяем наличие папок и создаем если их нет
+                        bool isExists = System.IO.Directory.Exists(pathStringLarge);
+                        if (!isExists)
+                            System.IO.Directory.CreateDirectory(pathStringLarge);
+
+
+                        //Создаем имя файла для сохранения на сервере
+                        var pathLargeStart = string.Format("{0}\\{1}", pathStringLarge, filelarge.FileName);
+
+                        isExists = System.IO.File.Exists(pathLargeStart);
+                        int i = 1;
+                        var pathLarge = pathLargeStart;
+                        while (isExists) 
+                            {
+                                pathLarge = pathLargeStart + "_" + i;
+                                isExists = System.IO.File.Exists(pathLarge);
+                                i++;
+                            }
+                        
+                        filelarge.SaveAs(pathLarge);
+
+                        //Создаем уменьшенную копию изображения
+                        isExists = System.IO.Directory.Exists(pathStringSmall);
+                        if (!isExists)
+                            System.IO.Directory.CreateDirectory(pathStringSmall);
+                        var pathSmall = string.Format("{0}\\{1}", pathStringSmall, filelarge.FileName);
+                        
+                        var filesmall = ResizeImage.ResizeOrigImg(Image.FromStream(filelarge.InputStream), 150, 150);
+                        filesmall.Save(pathSmall);
+
+                        PhotoModel photo = new PhotoModel();
+                        photo.DateUploaded = DateTime.Today;
+                        photo.LargeSourse = pathLarge;
+                        photo.SmallSourse = pathSmall;
+                        photo.Event.EventModelID = EventID;
+                        db.Photos.Add(photo);
+                        db.SaveChanges();
+                        
+                        
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //обработка если что-то произойдет при загрузке файла
+                isSavedSuccessfully = false;
+            }
+
+
+            if (isSavedSuccessfully)
+            {
+                return RedirectToAction("Photos", EventID);
+            }
+            else
+            {
+                return Json(new { Message = "Произошла ошибка при загрузке файлов" });
+            }
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

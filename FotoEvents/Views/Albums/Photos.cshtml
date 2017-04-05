@@ -1,0 +1,28 @@
+﻿@model IEnumerable<FotoEvents.Models.PhotoModel>
+
+@{
+    ViewBag.Title = "Фотоальбом";
+}
+
+<h2>Фотоальбом мероприятия @Html.DisplayFor(model => model.First().Event.Title)</h2>
+
+    <p>
+        @Html.ActionLink("Загрузить новые", "Create")
+    </p>
+    <div class="container">
+        <div class="row-fluid">
+
+            @foreach (var item in Model)
+            {
+                
+                    
+                        <div class="display-field col-md-3">
+
+                            <img class="photosmall" src="@Url.Content("~/"+item.SmallSourse)" />
+                        </div>
+
+                  
+                      
+            }
+         </div>
+</div>
