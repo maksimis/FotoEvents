@@ -12,31 +12,37 @@
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Создать", "Create")
+    <button onclick="location.href='@Url.Action("Create", "Events")';return false;">Создать новое мероприятие</button>
+   
 </p>
 <div class="row-fluid">
     @foreach (var item in Model)
     {
         <div class="col-md-12 ">
             <div class="row">
-                <div class="col-md-4 ">
-                    <img class="photosmall" src="@Url.Content("~/"+item.SmallSourse)" />
+                <div class="col-md-2 ">
+                    <a href='@Url.Action("Photos", "Albums",new {eventID=item.ЕventModel.EventModelID })'> <img class="photosmall" src="@Url.Content("~/"+item.SmallSourse)" /></a>
                 </div>
 
-                <div class="col-md-8">
-                    <div class="row">
-                        @Html.DisplayFor(modelItem => item.ЕventModel.DateTime)
+                <div class="col-md-10">
+                    <div class="row h3">
+                        @item.ЕventModel.DateTime.ToString("dd MMMM yyyy")
+                       
+                    </div>
+                    <div class="row h3">
+                        
+                            @Html.ActionLink(item.ЕventModel.Title, "Details", new { id = item.ЕventModel.EventModelID })
+                        
                     </div>
                     <div class="row">
-                        @Html.ActionLink(item.ЕventModel.Title, "Details", new { id = item.ЕventModel.EventModelID })
+                        <div class="col-md-2">
+                            @Html.ActionLink("Редактировать", "Edit", new { id = item.ЕventModel.EventModelID })
+                        </div>
+                        <div class="col-md-2">
+                            @Html.ActionLink("Удалить", "Delete", new { id = item.ЕventModel.EventModelID })
+                        </div>
                     </div>
-                    <div class="row">
-                        @Html.ActionLink("Редактировать", "Edit", new { id = item.ЕventModel.EventModelID })
                     </div>
-                    <div class="row">
-                        @Html.ActionLink("Удалить", "Delete", new { id=item.ЕventModel.EventModelID })
-                    </div>
-                </div>
             </div>
         </div>
     }

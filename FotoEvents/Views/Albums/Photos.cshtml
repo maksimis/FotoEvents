@@ -7,22 +7,24 @@
 <h2>Фотоальбом мероприятия @Html.DisplayFor(model => model.First().Event.Title)</h2>
 
     <p>
-        @Html.ActionLink("Загрузить новые", "Create")
+        @Html.ActionLink("Загрузить новые", "Create", new { id = Model.First().Event.EventModelID})
     </p>
     <div class="container">
         <div class="row-fluid">
 
             @foreach (var item in Model)
             {
-                
-                    
-                        <div class="display-field col-md-3">
 
-                            <img class="photosmall" src="@Url.Content("~/"+item.SmallSourse)" />
-                        </div>
+                <a href="@Url.Content("~/"+Model.First().LargeSourse)" class="flipLightBox"><img class="photosmall" src="@Url.Content("~/"+item.SmallSourse)" /><span></span></a>
+                       @* <div class="display-field col-md-3">  
+
+                           <img class="photosmall" src="@Url.Content("~/"+item.SmallSourse)" />
+                        </div>*@
 
                   
                       
             }
+           
+
          </div>
 </div>

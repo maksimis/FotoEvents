@@ -1,10 +1,10 @@
 ﻿@model FotoEvents.Models.EventModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Редактирование мероприятия";
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
 
 
 @using (Html.BeginForm())
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>EventModel</h4>
+     
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.EventModelID)
@@ -54,13 +54,21 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+                <div class=row>
+                    <div class="col-md-3">
+                        <input type="date" id="Date" value="@Model.DateTime.ToString("yyyy-MM-dd")" class="form-control" />
+                     </div>
+                    <div class="col-md-2">
+                        <input type="time" id="Time" value="@Model.DateTime.ToShortTimeString()" class="form-control" />
+                    </div>
+                            <input type="hidden" id="DateTime" name="DateTime" value="" />
+                            @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ClubID, "ClubID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ClubID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ClubID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ClubID, "", new { @class = "text-danger" })
@@ -68,7 +76,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TypeID, "TypeID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TypeID,  htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("TypeID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
@@ -77,16 +85,28 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" onclick="copydatetime" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Вернуться к списку мероприятий", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script type="text/javascript">
+//<![CDATA[
+    function copydatetime() {
+
+    var date = document.getElementById('Date');
+    var time = document.getElementById('Time');
+    var datetime = document.getElementById('DateTime');
+    datetime.value = date.value +" "+ time.value;
+
+    }
+    //]]>
+</script>

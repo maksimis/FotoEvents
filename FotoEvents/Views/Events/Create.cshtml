@@ -1,10 +1,10 @@
 ﻿@model FotoEvents.Models.EventModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Создание мепроприятия";
 }
 
-<h2>Create</h2>
+<h2>@ViewBag.Title</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,13 +12,13 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>EventModel</h4>
+      
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @Value = "Введите название мероприятия" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Discription, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Discription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Discription, new { htmlAttributes = new { @class = "form-control", @Value = "Введите описание мероприятия" } })
                 @Html.ValidationMessageFor(model => model.Discription, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -34,7 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control", @Value = "Введите место проведения мероприятия" } })
                 @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,43 +52,48 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-             
-              <!-- Html.EditorFor(model => model.DateTime, new { htmlAttributes = new { class = "form-control" } })-->
-                
-               
-                <input type="date" id="Date" /><input type="time" id="Time"/>
-                <input type="hidden" id="DateTime" name="DateTime" value=""/>
-                @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
-               <!--  <input class="colortext" type="button" value="Жмяк" onclick="copydatetime()"><br>-->
-            </div>
-        </div>
+                <div class=row>
+                    <div class="col-md-3">
+                        <input type="date" id="Date" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ClubID, "ClubID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ClubID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ClubID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <input type="time" id="Time " class="form-control" />
+                    </div>
+                    <input type="hidden" id="DateTime" name="DateTime" value="" />
+                    @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TypeID, "TypeID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TypeID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ClubID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("ClubID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ClubID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" onclick="copydatetime()" />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TypeID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("TypeID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Создать" class="btn btn-default" onclick="copydatetime()" />
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+
+
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Вернуться к списку мероприятий", "Index")
 </div>
 
 @section Scripts {

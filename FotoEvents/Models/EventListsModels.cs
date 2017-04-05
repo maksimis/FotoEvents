@@ -11,6 +11,7 @@ namespace FotoEvents.Models
         [Key]
         public int ClubID { get; set; }
         [Required]
+        [Display(Name = "Клуб")]
         public string Title { get; set; }
     }
     public class Type
@@ -18,6 +19,7 @@ namespace FotoEvents.Models
         [Key]
         public int TypeID { get; set; }
         [Required]
+        [Display(Name = "Тип мероприятия")]
         public string Title { get; set; }
     }
 }

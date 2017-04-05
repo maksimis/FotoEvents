@@ -19,11 +19,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
- <!--              @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })-->
+ <!--              @Html.ActionLink("Фотоалбом мероприятий", "Index", "Events", new { area = "" }, new { @class = "navbar-brand" })-->
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
+                   
                     <li>@Html.ActionLink("Список мероприятий", "Index", "Events")</li>
                     <li>@Html.ActionLink("Фотоальбомы", "Index", "Albums")</li>
                     <li>@Html.ActionLink("О программе", "About", "Home")</li>
@@ -49,5 +49,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/dropzonescripts")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/Scripts/fliplightbox/fliplightbox.min.js"></script>
+    <script type="text/javascript">$('body').flipLightBox()</script>
 </body>
 </html>

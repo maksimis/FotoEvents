@@ -42,10 +42,20 @@ namespace FotoEvents.Controllers
             
         }
 
-        public ActionResult Photos(int eventID)
+        public ActionResult Photos(int? eventID)
         {
-
-            return View(db.Photos.Where(x=>x.Event.EventModelID==eventID).ToList());
+            if (eventID == null)
+            {
+             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var photos = db.Photos.Where(x => x.Event.EventModelID == eventID).ToList();
+            
+            if (photos.Count()== 0)
+            {
+            return RedirectToAction("Create", new { id = eventID });
+            }
+            return View(photos);
+            
         }
 
         // GET: Events/Details/5
@@ -64,11 +74,19 @@ namespace FotoEvents.Controllers
         }
 
         // GET: Events/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.ClubID = new SelectList(db.Clubs, "ClubID", "Title");
-            ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Title");
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EventModel eventModel = db.Events.Find(id);
+            if (eventModel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(eventModel);
+
         }
 
         // POST: Events/Create
