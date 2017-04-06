@@ -32,7 +32,7 @@
                         <input type="date" id="Date" name="Date" onchange="copydatetime()" value="@Model.DateTime.ToString("yyyy-MM-dd")" class="form-control h3" />
                     </div>
                     <div class="col-md-2">
-                        <input type="time" id="Time" name="Time" onchange="copydatetime()" value="@Model.DateTime.ToShortTimeString()" class="form-control h3" />
+                        <input type="time" id="Time" name="Time" onchange="copydatetime()" value="@Model.DateTime.ToString("hh:mm")" class="form-control h3" />
                     </div>
                     @*@Html.EditorFor(model => model.DateTime)*@
                     <div class="col-md-4">
