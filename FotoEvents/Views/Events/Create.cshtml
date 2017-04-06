@@ -32,8 +32,9 @@
                     </div>
                     <div class="col-md-2">
 
-                        <input type="time" id="Time " class="form-control" />
+                        <input type="time" id="Time" class="form-control" />
                     </div>
+                    @*@Html.EditorFor(model => model.DateTime)*@
                     <input type="hidden" id="DateTime" name="DateTime" value="" />
                     @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
 
@@ -83,17 +84,13 @@
         </div>
 
 
-
-
-
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Создать" class="btn btn-default" onclick="copydatetime()" />
-                    </div>
+                
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Создать" class="btn btn-default" onclick="copydatetime()" />
                 </div>
             </div>
-
 
 }
 

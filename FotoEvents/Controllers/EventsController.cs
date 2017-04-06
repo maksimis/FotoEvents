@@ -139,10 +139,18 @@ namespace FotoEvents.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            
             EventModel eventModel = db.Events.Find(id);
+            //Удаляем фото связанные с событием
+            var photos = db.Photos.Where(x => x.Event.EventModelID == id);
+            foreach (PhotoModel ph in photos)
+            {
+                db.Photos.Remove(ph);
+            }
             db.Events.Remove(eventModel);
             db.SaveChanges();
             return RedirectToAction("Index");
+            
         }
 
         protected override void Dispose(bool disposing)

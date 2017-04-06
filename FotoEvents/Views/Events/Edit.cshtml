@@ -29,13 +29,16 @@
             <div class="col-md-10">
                 <div class=row>
                     <div class="col-md-3">
-                        <input type="date" id="Date" value="@Model.DateTime.ToString("yyyy-MM-dd")" class="form-control h3" />
+                        <input type="date" id="Date" name="Date" onchange="copydatetime()" value="@Model.DateTime.ToString("yyyy-MM-dd")" class="form-control h3" />
                     </div>
                     <div class="col-md-2">
-                        <input type="time" id="Time" value="@Model.DateTime.ToShortTimeString()" class="form-control h3" />
+                        <input type="time" id="Time" name="Time" onchange="copydatetime()" value="@Model.DateTime.ToShortTimeString()" class="form-control h3" />
                     </div>
-                    <input type="hidden" id="DateTime" name="DateTime" value="" />
-                    @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+                    @*@Html.EditorFor(model => model.DateTime)*@
+                    <div class="col-md-4">
+                        <input type="hidden" id="DateTime" name="DateTime"class="form-control h3" />
+                    </div>
+                      @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -90,7 +93,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" onclick="copydatetime" value="Сохранить" class="btn btn-default" />
+                <input type="submit" onclick="copydatetime()" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -102,15 +105,18 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
 }
 <script type="text/javascript">
-//<![CDATA[
+    //<![CDATA[
     function copydatetime() {
 
-    var date = document.getElementById('Date');
-    var time = document.getElementById('Time');
-    var datetime = document.getElementById('DateTime');
-    datetime.value = date.value +" "+ time.value;
+        var date = document.getElementById('Date');
+        var time = document.getElementById('Time');
+        var datetime = document.getElementById('DateTime');
+        
+        datetime.value = date.value + " " + time.value;
+      
 
     }
     //]]>
